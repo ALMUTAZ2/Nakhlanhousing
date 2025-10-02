@@ -226,6 +226,43 @@
             font-family: 'Courier New', monospace;
             font-size: 16px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        /* تصميم معلومات المحولات الجديدة */
+        .transformer-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .info-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .error-section {
@@ -326,9 +363,7 @@
             </div>
             <div>
                 <div class="company-name">الشركة السعودية للكهرباء</div>
-<div class="subtitle">أداة ذكية مصممة لتسريع عملية استكمال الطلبات <br>بناءً على إحداثيات الرخصة والمقاول المنفذ</div>
-
-</div>
+                <div class="subtitle">أداة ذكية مصممة لتسريع عملية استكمال الطلبات <br>بناءً على إحداثيات الرخصة والمقاول المنفذ</div>
             </div>
         </div>
     </div>
@@ -336,8 +371,6 @@
     <div class="container electric-effect">
         <div class="form-section">
            <h1>🗺️ تحديد المنطقة والمقاول المنفذ <br>بمخطط نخلان - صبيا</h1>
-
-
             
             <div class="input-group">
                 <label for="latitude">📍 خط العرض (Latitude):</label>
@@ -348,9 +381,14 @@
                 <label for="longitude">🌐 خط الطول (Longitude):</label>
                 <input type="number" id="longitude" step="any" placeholder="مثال: 42.6200">
             </div>
+
+            <div class="input-group">
+                <label for="plotNumber">🏠 رقم القطعة (Plot Number):</label>
+                <input type="number" id="plotNumber" placeholder="مثال: 4387">
+            </div>
             
-            <button class="btn" onclick="findContractor()">
-                ⚡ تحديد المقاول والمنطقة
+            <button class="btn" onclick="findContractorAndPlot()">
+                ⚡ تحديد المقاول والمحول ولوحة التوزيع
             </button>
         </div>
         
@@ -358,10 +396,8 @@
     </div>
 
     <div class="footer">
-    <p style="direction: rtl;">© 2025 إعداد م/ المعتز ابوطالب - جميع الحقوق محفوظة</p>
-</div>
-
-
+        <p style="direction: rtl;">© 2025 إعداد م/ المعتز ابوطالب - جميع الحقوق محفوظة</p>
+    </div>
 
     <script>
         // تعريف المناطق والمقاولين مع إحداثياتهم
@@ -456,6 +492,1775 @@ coordinates: [
             }
         ];
 
+        // بيانات المحولات ولوحات التوزيع الفرعية والقطع
+        const transformersData = [
+    {
+        transformerNumber: 1,
+        miniPillers: [
+            { number: 1, plots: [4387, 4388, 4389, 4390] },
+            { number: 2, plots: [4391, 4392, 4393, 4393] },
+            { number: 3, plots: [4395, 4396, 4397, 4398] },
+            { number: 4, plots: [4399, 4400, 4401, 4402] },
+            { number: 5, plots: [4403, 4404, 4406, 4408] },
+            { number: 6, plots: [4413, 4415, 4417, 4419] },
+            { number: 7, plots: [4421, 4423, 4425, 4373] },
+            { number: 8, plots: [4374, 4376, 4378, 4380] },
+            { number: 9, plots: [4382, 4384, 4386, 4385] },
+            { number: 10, plots: [4366, 4368, 4370, 4372] }
+        ]
+    },
+    {
+        transformerNumber: 2,
+        miniPillers: [
+            { number: 1, plots: [4377, 4379, 4381, 4383] },
+            { number: 2, plots: [4341, 4343, 4345, 4347] },
+            { number: 3, plots: [4349, 4351, 4353, 4355] },
+            { number: 4, plots: [4357, 4359, 4361, 4375] },
+            { number: 5, plots: [4360, 4362, 4363, 4364] },
+            { number: 6, plots: [4352, 4354, 4356, 4358] },
+            { number: 7, plots: [4344, 4346, 4348, 4350] },
+            { number: 8, plots: [4338, 4339, 4340, 4342] },
+            { number: 9, plots: [4323, 4324, 4336, 4337] },
+            { number: 10, plots: [4321, 4287, 4288, 4290] }
+        ]
+    },
+    {
+        transformerNumber: 3,
+        miniPillers: [
+            { number: 1, plots: [4405, 4407, 4409, 4411] },
+            { number: 2, plots: [4498, 4500, 4502, 4504] },
+            { number: 3, plots: [4412, 4443, 4445, 4446] },
+            { number: 4, plots: [4435, 4437, 4439, 4441] },
+            { number: 5, plots: [4410, 4414, 4416, 4418] },
+            { number: 6, plots: [4427, 4429, 4431, 4433] },
+            { number: 7, plots: [4420, 4422, 4424, 4426] },
+            { number: 8, plots: [4365, 4367, 4369, 4371] },
+            { number: 9, plots: [4490, 4492, 4494, 4496] },
+            { number: 10, plots: [4444, 4446, 4447, 4449] }
+        ]
+    },
+    {
+        transformerNumber: 4,
+        miniPillers: [
+            { number: 1, plots: [4554, 4556, 4558, 4560] },
+            { number: 2, plots: [4546, 4548, 4550, 4552] },
+            { number: 3, plots: [4542, 4543, 4544, 4545] },
+            { number: 4, plots: [4506, 4523, 4524, 4525] },
+            { number: 5, plots: [4526, 4527, 4528, 4529] },
+            { number: 6, plots: [4530, 4531, 4532, 4533] },
+            { number: 7, plots: [4534, 4535, 4536, 4537] },
+            { number: 8, plots: [4562, 4564, 4566, 4568] },
+            { number: 9, plots: [4538, 4539, 4540, 4541] },
+            { number: 10, plots: [4697, 4699, 4701, 4702] }
+        ]
+    },
+    {
+        transformerNumber: 5,
+        miniPillers: [
+            { number: 1, plots: [4578, 4580, 4582, 4584] },
+            { number: 2, plots: [4586, 4588, 4590, 4592] },
+            { number: 3, plots: [4594, 4595, 4596, 4597] },
+            { number: 4, plots: [4516, 4518, 4520, 4522] },
+            { number: 5, plots: [4547, 4549, 4551, 4553] },
+            { number: 6, plots: [4555, 4557, 4559, 4561] },
+            { number: 7, plots: [4563, 4565, 4567, 4569] },
+            { number: 8, plots: [4570, 4572, 4574, 4576] },
+            { number: 9, plots: [4688, 4690, 4692, 4695] },
+            { number: 10, plots: [4694, 4696, 4698, 4700] }
+        ]
+    },
+    {
+        transformerNumber: 6,
+        miniPillers: [
+            { number: 1, plots: [4486, 4487, 4488, 4489] },
+            { number: 2, plots: [4491, 4493, 4495, 4497] },
+            { number: 3, plots: [4499, 4501, 4503, 4505] },
+            { number: 4, plots: [4515, 4517, 4519, 4521] },
+            { number: 5, plots: [4507, 4509, 4511, 4513] },
+            { number: 6, plots: [4508, 4510, 4512, 4514] },
+            { number: 7, plots: [4598, 4600, 4602, 4604] },
+            { number: 8, plots: [4599, 4601, 4603, 4605] },
+            { number: 9, plots: [4607, 4609, 4611, 4613] },
+            { number: 10, plots: [4614, 4615, 4616, 4618] }
+        ]
+    },
+    {
+        transformerNumber: 7,
+        miniPillers: [
+            { number: 1, plots: [4462, 4464, 4466, 4468] },
+            { number: 2, plots: [4210, 4212, 4214, 4216] },
+            { number: 3, plots: [4454, 4456, 4458, 4460] },
+            { number: 4, plots: [4451, 4453, 4455, 4457] },
+            { number: 5, plots: [4218, 4222, 4224, 4226] },
+            { number: 6, plots: [4220, 4448, 4450, 4452] },
+            { number: 7, plots: [4436, 4438, 4440, 4442] },
+            { number: 8, plots: [4219, 4221, 4223, 4225] },
+            { number: 9, plots: [4227, 4229, 4231, 4233] },
+            { number: 10, plots: [4428, 4430, 4432, 4434] }
+        ]
+    },
+    {
+        transformerNumber: 8,
+        miniPillers: [
+            { number: 1, plots: [4195, 4197, 4199, 4201] },
+            { number: 2, plots: [4183, 4185, 4192, 4193] },
+            { number: 3, plots: [4175, 4177, 1479, 4181] },
+            { number: 4, plots: [4203, 4205, 4207, 4209] },
+            { number: 5, plots: [4211, 4213, 4215, 4217] },
+            { number: 6, plots: [4243, 4244, 4245, 4246] },
+            { number: 7, plots: [4248, 4250, 4252, 4254] },
+            { number: 8, plots: [4247, 4249, 4251, 4253] },
+            { number: 9, plots: [4228, 4230, 4232, 4234] },
+            { number: 10, plots: [4236, 4238, 4240, 4242] }
+        ]
+    },
+    {
+        transformerNumber: 9,
+        miniPillers: [
+            { number: 1, plots: [4263, 42365, 4267, 4269] },
+            { number: 2, plots: [4264, 4266, 4268, 4270] },
+            { number: 3, plots: [4272, 4274, 4276, 4278] },
+            { number: 4, plots: [4289, 4291, 4293, 4295] },
+            { number: 5, plots: [4280, 4282, 4284, 4286] },
+            { number: 6, plots: [4235, 4237, 4239, 4241] },
+            { number: 7, plots: [4279, 4281, 4283, 4285] },
+            { number: 8, plots: [4255, 4257, 4259, 4261] },
+            { number: 9, plots: [4271, 4273, 4275, 4277] },
+            { number: 10, plots: [4256, 4258, 4260, 4262] }
+        ]
+    },
+    {
+        transformerNumber: 10,
+        miniPillers: [
+            { number: 1, plots: [4332, 4333, 4334, 4335] },
+            { number: 2, plots: [4316, 4318, 4320, 4322] },
+            { number: 3, plots: [4308, 4310, 4312, 4314] },
+            { number: 4, plots: [4307, 4308, 4309, 4310] },
+            { number: 5, plots: [4300, 4302, 4304, 4306] },
+            { number: 6, plots: [4313, 4315, 4317, 4319] },
+            { number: 7, plots: [4292, 4294, 4296, 4298] },
+            { number: 8, plots: [4305, 4361, 4363, 4365] },
+            { number: 9, plots: [4271, 4273, 4275, 4277] },
+            { number: 10, plots: [4167, 4179, 4171, 4173] }
+        ]
+    },
+    {
+        transformerNumber: 11,
+        miniPillers: [
+            { number: 1, plots: [4152, 4325, 4326, 4327] },
+            { number: 2, plots: [4153, 4155, 4157, 4159] },
+            { number: 3, plots: [4328, 4329, 4330, 4331] },
+            { number: 4, plots: [4154, 4156, 4158, 4160] },
+            { number: 5, plots: [4162, 4164, 4166, 4168] },
+            { number: 6, plots: [4089, 4091, 4093, 4095] },
+            { number: 7, plots: [4096, 4098, 4100, 4102] },
+            { number: 8, plots: [4097, 4099, 4101, 4103] },
+            { number: 9, plots: [4148, 4149, 4150, 4151] },
+            { number: 10, plots: [4144, 4145, 4146, 4147] }
+        ]
+    },
+    {
+        transformerNumber: 12,
+        miniPillers: [
+            { number: 1, plots: [4112, 4134, 4136, 4138] },
+            { number: 2, plots: [4113, 4140, 4142, 4143] },
+            { number: 3, plots: [4105, 4107, 4109, 4111] },
+            { number: 4, plots: [4104, 4106, 4108, 4110] },
+            { number: 5, plots: [4088, 4090, 4092, 4094] },
+            { number: 6, plots: [4055, 4057, 4059, 4061] },
+            { number: 7, plots: [4047, 4049, 4051, 4053] },
+            { number: 8, plots: [4046, 4048, 4050, 4052] },
+            { number: 9, plots: [4124, 4126, 4128, 4130, 4132] },
+            { number: 10, plots: [4133, 4135, 4137, 4139] }
+        ]
+    },
+    {
+        transformerNumber: 13,
+        miniPillers: [
+            { number: 1, plots: [3888, 4031, 4032, 4034] },
+            { number: 2, plots: [4030, 4033, 4035, 4037] },
+            { number: 3, plots: [4039, 4041, 4043, 4045] },
+            { number: 4, plots: [4062, 4064, 4066, 4068] },
+            { number: 5, plots: [4054, 4056, 4058, 4060] },
+            { number: 6, plots: [4022, 4024, 4026, 4028] },
+            { number: 7, plots: [4073, 4074, 4075, 4076] },
+            { number: 8, plots: [4070, 4071, 4072, 4078] },
+            { number: 9, plots: [4063, 4065, 4067, 4069] },
+            { number: 10, plots: [4080, 4082, 4084, 4086] }
+        ]
+    },
+    {
+        transformerNumber: 14,
+        miniPillers: [
+            { number: 1, plots: [3878, 3880, 3882, 3884, 3887] },
+            { number: 2, plots: [4023, 4025, 4027, 4029] },
+            { number: 3, plots: [4182, 4184, 4186, 4188] },
+            { number: 4, plots: [4174, 4176, 4178, 4180] },
+            { number: 5, plots: [4077, 4079, 4081, 4083] },
+            { number: 6, plots: [4085, 4087, 4170, 4172] },
+            { number: 7, plots: [4483, 4485, 4189, 4187] },
+            { number: 8, plots: [3869, 3871, 3873, 3875] },
+            { number: 9, plots: [3877, 3879, 3881, 3883] },
+            { number: 10, plots: [3885, 3886, 3889, 3890] }
+        ]
+    },
+    {
+        transformerNumber: 15,
+        miniPillers: [
+            { number: 1, plots: [4478, 4480, 4482, 4484] },
+            { number: 2, plots: [4194, 4196, 4198, 4200] },
+            { number: 3, plots: [4470, 4472, 4474, 4476] },
+            { number: 4, plots: [4202, 4204, 4206, 4208] },
+            { number: 5, plots: [4467, 4469, 4471, 4473] },
+            { number: 6, plots: [4459, 4461, 4463, 4465] },
+            { number: 7, plots: [3856, 3858, 3860, 3862] },
+            { number: 8, plots: [3864, 3866, 3868, 3870] },
+            { number: 9, plots: [4475, 4477, 4479, 4481] },
+            { number: 10, plots: [4190, 4191, 3872, 3874, 3876] }
+        ]
+    },
+    {
+        transformerNumber: 16,
+        miniPillers: [
+            { number: 1, plots: [3848, 3850, 3852, 3854] },
+            { number: 2, plots: [3840, 3842, 3844, 3846] },
+            { number: 3, plots: [3832, 3834, 3836, 3838] },
+            { number: 4, plots: [4620, 4622, 4624, 4626] },
+            { number: 5, plots: [3824, 3826, 3828, 3830] },
+            { number: 6, plots: [4625, 4627, 4657, 4659] },
+            { number: 7, plots: [4656, 4658, 4660, 4662] },
+            { number: 8, plots: [3816, 3818, 3820, 3822] },
+            { number: 9, plots: [3809, 3811, 3812, 4672] },
+            { number: 10, plots: [4664, 4666, 4668, 4670] }
+        ]
+    },
+    {
+        transformerNumber: 17,
+        miniPillers: [
+            { number: 1, plots: [4617, 4619, 4621, 4623] },
+            { number: 2, plots: [4628, 4630, 4632, 4634] },
+            { number: 3, plots: [4629, 4631, 4633, 4635] },
+            { number: 4, plots: [4648, 4650, 4652, 4654] },
+            { number: 5, plots: [4644, 4646, 4639, 4637] },
+            { number: 6, plots: [4641, 4640, 4638, 4636] },
+            { number: 7, plots: [4612, 4610, 4608, 4606] },
+            { number: 8, plots: [4587, 4589, 4591, 4593] },
+            { number: 9, plots: [4579, 4581, 4583, 4585] },
+            { number: 10, plots: [4571, 4573, 4575, 4577] }
+        ]
+    },
+    {
+        transformerNumber: 18,
+        miniPillers: [
+            { number: 1, plots: [4685, 4683, 4681, 4679] },
+            { number: 2, plots: [4677, 4673, 4671, 4669] },
+            { number: 3, plots: [4667, 4665, 4663, 4661] },
+            { number: 4, plots: [3807, 3805, 3803, 3801] },
+            { number: 5, plots: [4672, 3811, 3812, 3809] },
+            { number: 6, plots: [4678, 4676, 4674, 4675] },
+            { number: 7, plots: [4649, 4651, 4653, 4655] },
+            { number: 8, plots: [4642, 4643, 4645, 4647] },
+            { number: 9, plots: [4686, 4684, 4682, 4680] },
+            { number: 10, plots: [4687, 4689, 4691, 4693] }
+        ]
+    },
+    {
+        transformerNumber: 19,
+        miniPillers: [
+            { number: 1, plots: [3837, 3839, 3841, 3843] },
+            { number: 2, plots: [3765, 3763, 3761, 3759] },
+            { number: 3, plots: [3845, 3847, 3849, 3851] },
+            { number: 4, plots: [3829, 3831, 3833, 3835] },
+            { number: 5, plots: [3773, 3771, 3769, 3767] },
+            { number: 6, plots: [3781, 3779, 3777, 3775] },
+            { number: 7, plots: [3827, 3825, 3826, 3821] },
+            { number: 8, plots: [3813, 3815, 3817, 3819] },
+            { number: 9, plots: [3785, 3783, 3782, 3784] },
+            { number: 10, plots: [3804, 3802, 3800, 3798] }
+        ]
+    },
+    {
+        transformerNumber: 20,
+        miniPillers: [
+            { number: 1, plots: [3853, 3855, 3857, 3859] },
+            { number: 2, plots: [3757, 3755, 3753, 3751] },
+            { number: 3, plots: [3749, 3747, 3745, 3743] },
+            { number: 4, plots: [3861, 3863, 3865, 3867] },
+            { number: 5, plots: [3741, 3739, 3737, 3736] },
+            { number: 6, plots: [3734, 3732, 3730, 3728] },
+            { number: 7, plots: [3898, 3896, 3894, 3892] },
+            { number: 8, plots: [3900, 3902, 3904, 3906] },
+            { number: 9, plots: [3723, 3725, 3731, 3729] },
+            { number: 10, plots: [3740, 3738, 3735, 3733] }
+        ]
+    },
+    {
+        transformerNumber: 21,
+        miniPillers: [
+            { number: 1, plots: [3700, 3702, 3704, 3705] },
+            { number: 2, plots: [3764, 3762, 3760, 3758] },
+            { number: 3, plots: [3707, 3709, 3711, 3713] },
+            { number: 4, plots: [3756, 3754, 3752, 3750] },
+            { number: 5, plots: [3748, 3746, 3744, 3742] },
+            { number: 6, plots: [3715, 3717, 3719, 3721] },
+            { number: 7, plots: [3692, 3694, 3696, 3698] },
+            { number: 8, plots: [3772, 3770, 3768, 3766] },
+            { number: 9, plots: [3780, 3778, 3776, 3774] },
+            { number: 10, plots: [3684, 3686, 3688, 3690] }
+        ]
+    },
+    {
+        transformerNumber: 22,
+        miniPillers: [
+            { number: 1, plots: [3699, 3701, 3703, 3706] },
+            { number: 2, plots: [3708, 3710, 3712, 3714] },
+            { number: 3, plots: [3716, 3718, 3720, 3722] },
+            { number: 4, plots: [3676, 3678, 3680, 3682] },
+            { number: 5, plots: [3675, 3677, 3679, 3681] },
+            { number: 6, plots: [3691, 3693, 3695, 3697] },
+            { number: 7, plots: [3667, 3669, 3671, 3673] },
+            { number: 8, plots: [3683, 3685, 3687, 3689] },
+            { number: 9, plots: [3793, 3666, 3668, 3670] },
+            { number: 10, plots: [3786, 3788, 3790, 3792] }
+        ]
+    },
+    {
+        transformerNumber: 23,
+        miniPillers: [
+            { number: 1, plots: [3655, 3653, 3651, 3649] },
+            { number: 2, plots: [3664, 3662, 3659, 3657] },
+            { number: 3, plots: [3650, 3648, 3646, 3644] },
+            { number: 4, plots: [3945, 3947, 3949, 3951] },
+            { number: 5, plots: [3946, 3948, 3950, 3952] },
+            { number: 6, plots: [3943, 3941, 3939, 3937] },
+            { number: 7, plots: [3658, 3656, 3654, 3652] },
+            { number: 8, plots: [3665, 3663, 3661, 3660] },
+            { number: 9, plots: [3787, 3789, 3791, 3794] },
+            { number: 10, plots: [3799, 3797, 3796, 3795] }
+        ]
+    },
+    {
+        transformerNumber: 24,
+        miniPillers: [
+            { number: 1, plots: [3633, 3631, 3629, 3627] },
+            { number: 2, plots: [3961, 3963, 3965, 3967] },
+            { number: 3, plots: [3652, 3623, 3621, 3619] },
+            { number: 4, plots: [3617, 3970, 3972, 3974] },
+            { number: 5, plots: [3624, 3622, 3620, 3618] },
+            { number: 6, plots: [3632, 3630, 3628, 3626] },
+            { number: 7, plots: [3639, 3638, 3636, 3634] },
+            { number: 8, plots: [3647, 3645, 3643, 3641] },
+            { number: 9, plots: [3642, 3640, 3637, 3635] },
+            { number: 10, plots: [3953, 3955, 3957, 3959] }
+        ]
+    },
+    {
+        transformerNumber: 25,
+        miniPillers: [
+            { number: 1, plots: [3935, 3933, 3932, 3930] },
+            { number: 2, plots: [3954, 3956, 3958, 3960] },
+            { number: 3, plots: [3962, 3964, 3966, 3968] },
+            { number: 4, plots: [3969, 3971, 3973, 3975] },
+            { number: 5, plots: [3977, 3979, 3981, 3983] },
+            { number: 6, plots: [3928, 3926, 3925, 3927] },
+            { number: 7, plots: [3923, 3921, 3919, 3917] },
+            { number: 8, plots: [3924, 3922, 3920, 3918] },
+            { number: 9, plots: [3936, 3934, 3931, 3929] },
+            { number: 10, plots: [3944, 3942, 3940, 3938] }
+        ]
+    },
+    {
+        transformerNumber: 26,
+        miniPillers: [
+            { number: 1, plots: [3985, 3987, 3989, 3991] },
+            { number: 2, plots: [3909, 3911, 3913, 3915] },
+            { number: 3, plots: [3916, 3914, 3912, 3910] },
+            { number: 4, plots: [3908, 3724, 3726, 3727] },
+            { number: 5, plots: [3993, 3995, 3997, 3999] },
+            { number: 6, plots: [3901, 3903, 3905, 3907] },
+            { number: 7, plots: [4001, 4003, 4005, 4007] },
+            { number: 8, plots: [3899, 3897, 3895, 3893] },
+            { number: 9, plots: [3990, 3988, 3986, 3984] },
+            { number: 10, plots: [3976, 3978, 3980, 3982] }
+        ]
+    },
+        {
+        transformerNumber: 27,
+        miniPillers: [
+            { number: 1, plots: [4015, 4017, 4019, 4021] },
+            { number: 2, plots: [3891, 4009, 4011, 4013] },
+            { number: 3, plots: [3992, 3994, 3996, 3998] },
+            { number: 4, plots: [4000, 4002, 4004, 4006] },
+            { number: 5, plots: [4008, 4010, 4012, 4014] },
+            { number: 6, plots: [4114, 4016, 4018, 4020] },
+            { number: 7, plots: [4115, 4117, 4119, 4121] },
+            { number: 8, plots: [4123, 4125, 4127, 4129, 4131] },
+            { number: 9, plots: [4038, 4040, 4042, 4044] },
+            { number: 10, plots: [4116, 4118, 4120, 4122, 4036] }
+        ]
+    },
+    {
+        transformerNumber: 28,
+        miniPillers: [
+            { number: 1, plots: [3318, 3319, 3317, 3315] },
+            { number: 2, plots: [3313, 3311, 3309, 3307] },
+            { number: 3, plots: [3316, 3295, 3314, 3297] },
+            { number: 4, plots: [3287, 3289, 3291, 3293] },
+            { number: 5, plots: [3290, 3292, 3294, 3296] },
+            { number: 6, plots: [3299, 3301, 3303, 3305] },
+            { number: 7, plots: [3243, 3241, 3239, 3237] },
+            { number: 8, plots: [3235, 3233, 3231, 3229] },
+            { number: 9, plots: [3227, 3225, 3223, 3221] },
+            { number: 10, plots: [3306, 3308, 3310, 3312] }
+        ]
+    },
+    {
+        transformerNumber: 29,
+        miniPillers: [
+            { number: 1, plots: [3325, 3327, 3329, 3331] },
+            { number: 2, plots: [3333, 3340, 3332, 3338] },
+            { number: 3, plots: [3337, 3335, 3334, 3336] },
+            { number: 4, plots: [3342, 3344, 3346, 3348] },
+            { number: 5, plots: [3349, 3366, 3347, 3368] },
+            { number: 6, plots: [3339, 3341, 3343, 3345] },
+            { number: 7, plots: [3365, 3363, 3361, 3359] },
+            { number: 8, plots: [3358, 3360, 3362, 3364] },
+            { number: 9, plots: [3351, 3353, 3355, 3357] },
+            { number: 10, plots: [3356, 3354, 3352, 3350] }
+        ]
+    },
+    {
+        transformerNumber: 30,
+        miniPillers: [
+            { number: 1, plots: [3380, 3382, 3384, 3386] },
+            { number: 2, plots: [3388, 3390, 3392, 3394] },
+            { number: 3, plots: [3378, 3376, 3374, 3372] },
+            { number: 4, plots: [3373, 3375, 3377, 3379] },
+            { number: 5, plots: [3370, 3371, 3369, 3367] },
+            { number: 6, plots: [3443, 3445, 3447, 3449] },
+            { number: 7, plots: [3450, 3448, 3446, 3444] },
+            { number: 8, plots: [3442, 3440, 3438, 3436] },
+            { number: 9, plots: [3395, 3393, 3391, 3389] },
+            { number: 10, plots: [3387, 3385, 3383, 3381] }
+        ]
+    },
+    {
+        transformerNumber: 31,
+        miniPillers: [
+            { number: 1, plots: [3451, 3453, 3455, 3457] },
+            { number: 2, plots: [3459, 3461, 3463, 3465] },
+            { number: 3, plots: [3467, 3469, 3471, 3472] },
+            { number: 4, plots: [3472, 3475, 3477, 3470] },
+            { number: 5, plots: [3466, 3464, 3462, 3460] },
+            { number: 6, plots: [3458, 3456, 3454, 3452] },
+            { number: 7, plots: [3214, 3212, 3210, 3208] },
+            { number: 8, plots: [3206, 3204, 3202, 3200] },
+            { number: 9, plots: [3198, 3196, 3194, 3192] },
+            { number: 10, plots: [3421, 3473, 3423, 3425] }
+        ]
+    },
+    {
+        transformerNumber: 32,
+        miniPillers: [
+            { number: 1, plots: [3397, 3398, 3400, 3402] },
+            { number: 2, plots: [3404, 3406, 3408, 3410] },
+            { number: 3, plots: [3412, 3414, 3416, 3417] },
+            { number: 4, plots: [3397, 3399, 3434, 3432] },
+            { number: 5, plots: [3427, 3429, 3431, 3433] },
+            { number: 6, plots: [3435, 3437, 3439, 3441] },
+            { number: 7, plots: [3430, 3428, 3426, 3424] },
+            { number: 8, plots: [3422, 3420, 3418, 3419] },
+            { number: 9, plots: [3415, 3413, 3411, 3409] },
+            { number: 10, plots: [3407, 3405, 3403, 3401] }
+        ]
+    },
+    {
+        transformerNumber: 33,
+        miniPillers: [
+            { number: 1, plots: [3600, 3598, 3596, 3593] },
+            { number: 2, plots: [3591, 3589, 3587, 3585] },
+            { number: 3, plots: [3616, 3614, 3612, 3610] },
+            { number: 4, plots: [3608, 3606, 3604, 3602] },
+            { number: 5, plots: [3601, 3603, 3605, 3607] },
+            { number: 6, plots: [3609, 3611, 3613, 3615] },
+            { number: 7, plots: [3473, 3476, 3478, 3480] },
+            { number: 8, plots: [3482, 3484, 3486, 3488] },
+            { number: 9, plots: [3587, 3588, 3590, 3592] },
+            { number: 10, plots: [3594, 3595, 3597, 3599] }
+        ]
+    },
+    {
+        transformerNumber: 34,
+        miniPillers: [
+            { number: 1, plots: [3069, 3071, 3073, 3075] },
+            { number: 2, plots: [3066, 3064, 3062, 3060] },
+            { number: 3, plots: [3058, 3057, 3054, 3052] },
+            { number: 4, plots: [3077, 3079, 3081, 3083] },
+            { number: 5, plots: [3084, 3082, 3080, 3078] },
+            { number: 6, plots: [3219, 3217, 3215, 3216] },
+            { number: 7, plots: [3218, 3220, 3222, 3224] },
+            { number: 8, plots: [3226, 3228, 3230, 3232] },
+            { number: 9, plots: [3234, 3236, 3238, 3240] },
+            { number: 10, plots: [3070, 3072, 3074, 3076] }
+        ]
+    },
+    {
+        transformerNumber: 35,
+        miniPillers: [
+            { number: 1, plots: [3013, 3012, 3011, 3010] },
+            { number: 2, plots: [3009, 3008, 3007, 3006] },
+            { number: 3, plots: [3031, 3029, 3027, 3025] },
+            { number: 4, plots: [3023, 3021, 3019, 3017] },
+            { number: 5, plots: [3024, 3022, 3020, 3018] },
+            { number: 6, plots: [3016, 3015, 3244, 3242] },
+            { number: 7, plots: [3304, 3302, 3300, 3298] },
+            { number: 8, plots: [3255, 3254, 3253, 3252] },
+            { number: 9, plots: [3251, 3250, 3249, 3248] },
+            { number: 10, plots: [3247, 3246, 3245, 3014] }
+        ]
+    },
+    {
+        transformerNumber: 36,
+        miniPillers: [
+            { number: 1, plots: [3093, 3095, 3097, 3099] },
+            { number: 2, plots: [3091, 3089, 3087, 3085] },
+            { number: 3, plots: [3051, 3053, 3055, 3057] },
+            { number: 4, plots: [3059, 3061, 3042, 3040] },
+            { number: 5, plots: [3063, 3065, 3067, 3068] },
+            { number: 6, plots: [3050, 3048, 3046, 3044] },
+            { number: 7, plots: [3107, 3105, 3103, 3101] },
+            { number: 8, plots: [3108, 3106, 3104, 3102] },
+            { number: 9, plots: [3086, 3088, 3090, 3092] },
+            { number: 10, plots: [3094, 3096, 3098, 3100] }
+        ]
+    },
+    {
+        transformerNumber: 37,
+        miniPillers: [
+            { number: 1, plots: [2977, 2979, 2981, 2983] },
+            { number: 2, plots: [2987, 2989, 2991, 2993] },
+            { number: 3, plots: [2990, 2988, 2986, 2985] },
+            { number: 4, plots: [2992, 2994, 2996, 2998] },
+            { number: 5, plots: [3000, 3002, 3004, 3005] },
+            { number: 6, plots: [3026, 3028, 3030, 3032] },
+            { number: 7, plots: [3038, 3036, 3034, 3033] },
+            { number: 8, plots: [3035, 3037, 3039, 3041] },
+            { number: 9, plots: [3043, 3045, 3047, 3049] },
+            { number: 10, plots: [2987, 2980, 2982, 2984] }
+        ]
+    },
+    {
+        transformerNumber: 38,
+        miniPillers: [
+            { number: 1, plots: [2931, 2935, 2933] },
+            { number: 2, plots: [2937, 2939, 2941, 2943] },
+            { number: 3, plots: [2945, 2947, 2949, 2951] },
+            { number: 4, plots: [3001, 2999, 2997, 3003, 2995] },
+            { number: 5, plots: [2932, 2930, 2969, 2928] },
+            { number: 6, plots: [2927, 2929, 2925, 2924] },
+            { number: 7, plots: [2923, 2921, 2919, 2917] },
+            { number: 8, plots: [2915, 2913, 2912, 2914] },
+            { number: 9, plots: [2948, 2946, 2944, 2942] },
+            { number: 10, plots: [2940, 2938, 2936, 2934] }
+        ]
+    },
+    {
+        transformerNumber: 39,
+        miniPillers: [
+            { number: 1, plots: [2840, 2842, 2844, 2846] },
+            { number: 2, plots: [2848, 2850, 2852, 2854] },
+            { number: 3, plots: [2832, 2834, 2836, 2838] },
+            { number: 4, plots: [2839, 2837, 2835, 2833] },
+            { number: 5, plots: [2875, 2874, 2873, 2872] },
+            { number: 6, plots: [2871, 2870, 2869, 2868] },
+            { number: 7, plots: [2867, 2866, 2865, 2864] },
+            { number: 8, plots: [2863, 2862, 2861, 2860] },
+            { number: 9, plots: [2855, 2853, 2851, 2849] },
+            { number: 10, plots: [2847, 2845, 2843, 2841] }
+        ]
+    },
+    {
+        transformerNumber: 40,
+        miniPillers: [
+            { number: 1, plots: [2723, 2725, 2727, 2729] },
+            { number: 2, plots: [2769, 2768, 2766, 2764] },
+            { number: 3, plots: [2731, 2733, 2762, 2760] },
+            { number: 4, plots: [2758, 2756, 2754, 2752] },
+            { number: 5, plots: [2856, 2857, 2858, 2859] },
+            { number: 6, plots: [2749, 2747, 2745, 2743] },
+            { number: 7, plots: [2741, 2739, 2737, 2735] },
+            { number: 8, plots: [2738, 2740, 2742, 2744] },
+            { number: 9, plots: [2750, 2758, 2746, 2747] },
+            { number: 10, plots: [2736, 2734, 2732, 2730] }
+        ]
+    },
+    {
+        transformerNumber: 41,
+        miniPillers: [
+            { number: 1, plots: [2719, 2717, 2715, 2713] },
+            { number: 2, plots: [2687, 2689, 2691, 2693] },
+            { number: 3, plots: [2722, 2724, 2726, 2728] },
+            { number: 4, plots: [2711, 2709, 2707, 2705] },
+            { number: 5, plots: [2704, 2706, 2708, 2710] },
+            { number: 6, plots: [2703, 2702, 2701, 2700] },
+            { number: 7, plots: [2797, 2796, 2795, 2686] },
+            { number: 8, plots: [2688, 2690, 2692, 2694] },
+            { number: 9, plots: [2721, 2620, 2718, 2716] },
+            { number: 10, plots: [2714, 2698, 2712, 2699] }
+        ]
+    },
+    {
+        transformerNumber: 42,
+        miniPillers: [
+            { number: 1, plots: [2657, 2655, 2653, 2651] },
+            { number: 2, plots: [2635, 2637, 2639, 2641] },
+            { number: 3, plots: [2643, 2645, 2647, 2649] },
+            { number: 4, plots: [2650, 2648, 2646, 2644] },
+            { number: 5, plots: [2642, 2640, 2638, 2636] },
+            { number: 6, plots: [2776, 2774, 2772, 2770] },
+            { number: 7, plots: [2771, 2773, 2775, 2777] },
+            { number: 8, plots: [2753, 2755, 2757, 2759] },
+            { number: 9, plots: [2761, 2763, 2765, 2767] },
+            { number: 10, plots: [2658, 2656, 2654, 2652] }
+        ]
+    },
+    {
+        transformerNumber: 43,
+        miniPillers: [
+            { number: 1, plots: [2662, 2664, 2666, 2668] },
+            { number: 2, plots: [2684, 2682, 2680, 2678] },
+            { number: 3, plots: [2676, 2674, 2672, 2670] },
+            { number: 4, plots: [2665, 2433, 2667, 2669] },
+            { number: 5, plots: [2671, 2673, 2675, 2677] },
+            { number: 6, plots: [2679, 2681, 2683, 2685] },
+            { number: 7, plots: [2416, 2418, 2420, 2422] },
+            { number: 8, plots: [2424, 2426, 2428, 2430] },
+            { number: 9, plots: [2529, 2531, 2433, 2533] },
+            { number: 10, plots: [2660, 2659, 2661, 2663] }
+        ]
+    },
+    {
+        transformerNumber: 44,
+        miniPillers: [
+            { number: 1, plots: [2778, 2780, 2781, 2779] },
+            { number: 2, plots: [2782, 2784, 2786, 2788] },
+            { number: 3, plots: [2789, 2787, 2785, 2783] },
+            { number: 4, plots: [2801, 2803, 2805, 2807] },
+            { number: 5, plots: [2809, 2811, 2813, 2815] },
+            { number: 6, plots: [2817, 2819, 2791, 2793] },
+            { number: 7, plots: [2821, 2823, 2825, 2827] },
+            { number: 8, plots: [2829, 2831, 2830, 2828] },
+            { number: 9, plots: [2795, 2797, 2799, 2798] },
+            { number: 10, plots: [2796, 2794, 2792, 2790] }
+        ]
+    },
+    {
+        transformerNumber: 45,
+        miniPillers: [
+            { number: 1, plots: [2893, 2891, 2889, 2887] },
+            { number: 2, plots: [2885, 2883, 2881, 2879] },
+            { number: 3, plots: [2884, 2882, 2816, 2818] },
+            { number: 4, plots: [2880, 2878, 2876, 2877] },
+            { number: 5, plots: [2826, 2824, 2822, 2820] },
+            { number: 6, plots: [2814, 2812, 2810, 2808] },
+            { number: 7, plots: [2806, 2804, 2802, 2800] },
+            { number: 8, plots: [2966, 2964, 2962, 2960] },
+            { number: 9, plots: [2965, 2963, 2961, 2959] },
+            { number: 10, plots: [2892, 2890, 2888, 2887] }
+        ]
+    },
+    {
+        transformerNumber: 46,
+        miniPillers: [
+            { number: 1, plots: [2898, 2899, 2901, 2903] },
+            { number: 2, plots: [2894, 2967, 2895, 2969] },
+            { number: 3, plots: [2971, 2973, 2975, 2976] },
+            { number: 4, plots: [2968, 2970, 2972, 2974] },
+            { number: 5, plots: [2953, 2955, 2957, 2958] },
+            { number: 6, plots: [2956, 2954, 2952, 2950] },
+            { number: 7, plots: [2907, 2909, 2911, 2910] },
+            { number: 8, plots: [2908, 2906, 2904, 2902] },
+            { number: 9, plots: [2922, 2920, 2918, 2916] },
+            { number: 10, plots: [2894, 2896, 2898, 2900] }
+        ]
+    },
+    {
+        transformerNumber: 47,
+        miniPillers: [
+            { number: 1, plots: [3167, 3165, 3163, 3161] },
+            { number: 2, plots: [3159, 3157, 3155, 3153] },
+            { number: 3, plots: [3151, 3149, 3147, 3145] },
+            { number: 4, plots: [3199, 3201, 3203, 3205] },
+            { number: 5, plots: [3207, 3209, 3211, 3213] },
+            { number: 6, plots: [3144, 3142, 3140, 3148] },
+            { number: 7, plots: [3136, 3134, 3132, 3130, 3128] },
+            { number: 8, plots: [3129, 3131, 3133, 3135] },
+            { number: 9, plots: [3137, 3139, 3141, 3143] },
+            { number: 10, plots: [3127, 3125, 3123, 3121] }
+        ]
+    },
+    {
+        transformerNumber: 48,
+        miniPillers: [
+            { number: 1, plots: [3114, 3116, 3118, 3120] },
+            { number: 2, plots: [3111, 3110, 3112, 3114] },
+            { number: 3, plots: [3527, 3528, 3530, 3532] },
+            { number: 4, plots: [3534, 3536, 3538, 3540] },
+            { number: 5, plots: [3511, 3513, 3515, 3517] },
+            { number: 6, plots: [3519, 3521, 3523, 3525] },
+            { number: 7, plots: [3522, 3524, 3122, 3124, 3126] },
+            { number: 8, plots: [3512, 3514, 3516, 3518, 3520] },
+            { number: 9, plots: [3506, 3507, 3508, 3509, 3510] },
+            { number: 10, plots: [3119, 3117, 3115, 3113] }
+        ]
+    },
+    {
+        transformerNumber: 49,
+        miniPillers: [
+            { number: 1, plots: [3180, 3178, 3176, 3174] },
+            { number: 2, plots: [3172, 3502, 3504, 3170] },
+            { number: 3, plots: [3197, 3190, 3195, 3193] },
+            { number: 4, plots: [3188, 3186, 3184, 3182] },
+            { number: 5, plots: [3177, 3179, 3181, 3183] },
+            { number: 6, plots: [3185, 3187, 3189, 3191] },
+            { number: 7, plots: [3146, 3148, 3150, 3152] },
+            { number: 8, plots: [3154, 3156, 3158, 3160] },
+            { number: 9, plots: [3162, 3164, 3166, 3168] },
+            { number: 10, plots: [3169, 3171, 3173, 3175] }
+        ]
+    },
+    {
+        transformerNumber: 50,
+        miniPillers: [
+            { number: 1, plots: [3499, 3501, 3503, 3505] },
+            { number: 2, plots: [3570, 3572, 3574, 3576] },
+            { number: 3, plots: [3578, 3580, 3582, 3584] },
+            { number: 4, plots: [3583, 3581, 3579, 3577] },
+            { number: 5, plots: [3575, 3573, 3571, 3579] },
+            { number: 6, plots: [3490, 3493, 3495, 3497] },
+            { number: 7, plots: [3492, 3491, 3489, 3487] },
+            { number: 8, plots: [3485, 3483, 3481, 3479] },
+            { number: 9, plots: [3494, 3496, 3498, 3500] }
+        ]
+    },
+    {
+        transformerNumber: 51,
+        miniPillers: [
+            { number: 1, plots: [3551, 3553, 3555, 3508] },
+            { number: 2, plots: [3559, 3562, 3565, 3567] },
+            { number: 3, plots: [3556, 3557, 3560, 3561] },
+            { number: 4, plots: [3563, 3564, 3566, 3568] },
+            { number: 5, plots: [3542, 3544, 3545, 3543] },
+            { number: 6, plots: [3541, 3539, 3537, 3535] },
+            { number: 7, plots: [3533, 3531, 3529, 3527] },
+            { number: 8, plots: [2582, 2584, 2586, 2588] },
+            { number: 9, plots: [3549, 3547, 3546, 3548] },
+            { number: 10, plots: [2550, 3552, 3554] }
+        ]
+    },
+    {
+        transformerNumber: 52,
+        miniPillers: [
+            { number: 1, plots: [2632, 2630, 2628, 2626] },
+            { number: 2, plots: [2624, 2622, 2620, 2618] },
+            { number: 3, plots: [2616, 2614, 2612, 2610] },
+            { number: 4, plots: [2608, 2606, 2604, 2598] },
+            { number: 5, plots: [2603, 2605, 2607, 2609] },
+            { number: 6, plots: [2580, 2587, 2579, 2581] },
+            { number: 7, plots: [2589, 2587, 2585, 2583] },
+            { number: 8, plots: [2590, 2593, 2595, 2597] },
+            { number: 9, plots: [2599, 2601, 2602, 2600] },
+            { number: 10, plots: [2597, 2594, 2592, 2591] }
+        ]
+    },
+    {
+        transformerNumber: 53,
+        miniPillers: [
+            { number: 1, plots: [2552, 2554, 2556, 2558] },
+            { number: 2, plots: [2557, 2559, 2561, 2563] },
+            { number: 3, plots: [2565, 2567, 2269, 2571] },
+            { number: 4, plots: [2573, 2575, 2577, 2576] },
+            { number: 5, plots: [2613, 2615, 2617, 2619] },
+            { number: 6, plots: [2621, 2623, 2625, 2627] },
+            { number: 7, plots: [2629, 2631, 2633, 2634] },
+            { number: 8, plots: [2635, 2637, 2639, 2641] },
+            { number: 9, plots: [2543, 2545, 2547, 2549] },
+            { number: 10, plots: [2553, 2555, 2557, 2611] }
+        ]
+    },
+    {
+        transformerNumber: 54,
+        miniPillers: [
+            { number: 1, plots: [2519, 2517, 2515, 2513] },
+            { number: 2, plots: [2511, 2509, 2507, 2505] },
+            { number: 3, plots: [2518, 2516, 2514, 2512] },
+            { number: 4, plots: [2510, 2508, 2506, 2504] },
+            { number: 5, plots: [2574, 2572, 2570, 2568] },
+            { number: 6, plots: [2566, 2564, 2562, 2560] },
+            { number: 7, plots: [2550, 2548, 2546, 2544] },
+            { number: 8, plots: [2540, 2538, 2536, 2534] },
+            { number: 9, plots: [2532, 2542, 2530, 2528] },
+            { number: 10, plots: [2526, 2524, 2522, 2520] }
+        ]
+    },
+    {
+        transformerNumber: 55,
+        miniPillers: [
+            { number: 1, plots: [2527, 2525, 2523, 2521] },
+            { number: 2, plots: [2434, 2435, 2437, 2439] },
+            { number: 3, plots: [2441, 2443, 2245, 2447] },
+            { number: 4, plots: [2449, 2453, 2452, 2451] },
+            { number: 5, plots: [2450, 2448, 2446, 2444] },
+            { number: 6, plots: [2442, 2440, 2438, 2436] },
+            { number: 7, plots: [2431, 2429, 2427, 2425] },
+            { number: 8, plots: [2423, 2421, 2419, 2417] },
+            { number: 9, plots: [2415, 2414, 2413, 2412] },
+            { number: 10, plots: [2411, 2410, 2409, 2408] }
+        ]
+    },
+    {
+        transformerNumber: 56,
+        miniPillers: [
+            { number: 1, plots: [2455, 2457, 2459, 2461] },
+            { number: 2, plots: [2454, 2456, 2458, 2460] },
+            { number: 3, plots: [2407, 2406, 2405, 2404] },
+            { number: 4, plots: [2402, 2401, 2400, 2399] },
+            { number: 5, plots: [2463, 2462, 2403] },
+            { number: 6, plots: [2464, 2466, 2468, 2470] },
+            { number: 7, plots: [2471, 2469, 2467, 2465] },
+            { number: 8, plots: [2480, 2482, 2484, 2486] },
+            { number: 9, plots: [2473, 2475, 2477, 2479] },
+            { number: 10, plots: [2472, 2474, 2476, 2478] }
+        ]
+    },
+    {
+        transformerNumber: 57,
+        miniPillers: [
+            { number: 1, plots: [2218, 2216, 2214, 2212] },
+            { number: 2, plots: [2210, 2208, 2206, 2204] },
+            { number: 3, plots: [2207, 2209, 2211, 2213] },
+            { number: 4, plots: [2215, 2217, 2219, 2221] },
+            { number: 5, plots: [2223, 2225, 2227, 2229] },
+            { number: 6, plots: [2220, 2222, 2224, 2226] },
+            { number: 7, plots: [2228, 2230, 2232, 2234] },
+            { number: 8, plots: [2237, 2235, 2233, 2231] },
+            { number: 9, plots: [2288, 2286, 2285, 2287] },
+            { number: 10, plots: [2289, 2301, 2291, 2290] }
+        ]
+    },
+    {
+        transformerNumber: 58,
+        miniPillers: [
+            { number: 1, plots: [2236, 2238, 2240, 2242] },
+            { number: 2, plots: [2244, 2246, 2249, 2252] },
+            { number: 3, plots: [2253, 2256, 2258, 2260] },
+            { number: 4, plots: [2251, 2250, 2248, 2247] },
+            { number: 5, plots: [2245, 2243, 2241, 2239] },
+            { number: 6, plots: [2293, 2294, 2296, 2298] },
+            { number: 7, plots: [2319, 2300, 2317, 2315] },
+            { number: 8, plots: [2312, 2310, 2308, 2307] },
+            { number: 9, plots: [2302, 2304, 2305, 2303] },
+            { number: 10, plots: [2292, 2295, 2297, 2299] }
+        ]
+    },
+    {
+        transformerNumber: 59,
+        miniPillers: [
+            { number: 1, plots: [2205, 2203, 2201, 2199] },
+            { number: 2, plots: [2197, 2195, 2193, 2191] },
+            { number: 3, plots: [2189, 2187, 2185, 2183] },
+            { number: 4, plots: [2181, 2179, 2178, 2341] },
+            { number: 5, plots: [2180, 2182, 2184, 2286] },
+            { number: 6, plots: [2188, 2190, 2192, 2194] },
+            { number: 7, plots: [2196, 2198, 2200, 2202] },
+            { number: 8, plots: [2307, 2308, 2310, 2312] },
+            { number: 9, plots: [2337, 2336, 2333, 2331] },
+            { number: 10, plots: [2329, 2327, 2325, 2323] }
+        ]
+    },
+    {
+        transformerNumber: 60,
+        miniPillers: [
+            { number: 1, plots: [2274, 2276, 2278, 2280] },
+            { number: 2, plots: [2282, 2284, 2283, 2281] },
+            { number: 3, plots: [2254, 2255, 2257, 2259] },
+            { number: 4, plots: [2263, 2261, 2262, 2264] },
+            { number: 5, plots: [2279, 2277, 2275, 2273] },
+            { number: 6, plots: [2266, 2268, 2270, 2272] },
+            { number: 7, plots: [2271, 2269, 2267, 2265] },
+            { number: 8, plots: [2373, 2371, 2369, 2367] },
+            { number: 9, plots: [2365, 2363, 2364, 2366] },
+            { number: 10, plots: [2368, 2370, 2372, 2374] }
+        ]
+    },
+    {
+        transformerNumber: 61,
+        miniPillers: [
+            { number: 1, plots: [2349, 2347, 2345, 2342] },
+            { number: 2, plots: [2339, 2340, 2337, 2335] },
+            { number: 3, plots: [2334, 2332, 2330, 2328] },
+            { number: 4, plots: [2351, 2353, 2355, 2357] },
+            { number: 5, plots: [2326, 2324, 2322, 2321] },
+            { number: 6, plots: [2314, 2316, 2318, 2320] },
+            { number: 7, plots: [2359, 2361, 2362, 2360] },
+            { number: 8, plots: [2143, 2145, 2147, 2149] },
+            { number: 9, plots: [2358, 2356, 2354, 2352] },
+            { number: 10, plots: [2350, 2348, 2346, 2344] }
+        ]
+    },
+    {
+        transformerNumber: 62,
+        miniPillers: [
+            { number: 1, plots: [1858, 2174, 1857, 1854] },
+            { number: 2, plots: [2172, 2170, 2178, 2166] },
+            { number: 3, plots: [1859, 1861, 1863, 1865] },
+            { number: 4, plots: [2164, 2162, 2160, 2158] },
+            { number: 5, plots: [2156, 2154, 2152, 2150] },
+            { number: 6, plots: [2148, 2146, 2144, 2142] },
+            { number: 7, plots: [2151, 2153, 2155, 2157] },
+            { number: 8, plots: [2159, 2161, 2163, 2165] },
+            { number: 9, plots: [2167, 2169, 2343, 2171] },
+            { number: 10, plots: [2173, 2175, 2177, 2176] }
+        ]
+    },
+    {
+        transformerNumber: 63,
+        miniPillers: [
+            { number: 1, plots: [2107, 2109, 2111, 2113] },
+            { number: 2, plots: [2115, 2117, 2119, 2121] },
+            { number: 3, plots: [2123, 2125, 2127, 2129] },
+            { number: 4, plots: [2131, 2133, 2135, 2137] },
+            { number: 5, plots: [2139, 2141, 2140, 2138] },
+            { number: 6, plots: [2136, 2134, 2132, 2130] },
+            { number: 7, plots: [2069, 2067, 2065, 2063] },
+            { number: 8, plots: [2128, 2126, 2124, 2122] },
+            { number: 9, plots: [2120, 2118, 2116, 2114] },
+            { number: 10, plots: [2112, 2110, 2108, 2106] }
+        ]
+    },
+    {
+        transformerNumber: 64,
+        miniPillers: [
+            { number: 1, plots: [2389, 2387, 2385, 2383] },
+            { number: 2, plots: [2099, 2101, 2103, 2105] },
+            { number: 3, plots: [2381, 2379, 2377, 2375] },
+            { number: 4, plots: [2376, 2378, 2380, 2382] },
+            { number: 5, plots: [2384, 2386, 2388, 2390] },
+            { number: 6, plots: [2392, 2394, 2396, 2398] },
+            { number: 7, plots: [2397, 2395, 2393, 2391] },
+            { number: 8, plots: [2097, 2095, 2094, 2096] },
+            { number: 9, plots: [1999, 2001, 2003, 2005] },
+            { number: 10, plots: [2007, 2009, 2011, 2013] }
+        ]
+    },
+    {
+        transformerNumber: 65,
+        miniPillers: [
+            { number: 1, plots: [2025, 2027, 2026, 2024] },
+            { number: 2, plots: [2080, 2078, 2076, 2074] },
+            { number: 3, plots: [2081, 2079, 2077, 2075] },
+            { number: 4, plots: [2082, 2084, 2086, 2088] },
+            { number: 5, plots: [2090, 2092, 2093, 2091] },
+            { number: 6, plots: [2072, 2070, 2071, 2073] },
+            { number: 7, plots: [2083, 2085, 2087, 2089] },
+            { number: 8, plots: [2104, 2102, 2100, 2098] },
+            { number: 9, plots: [2015, 2014, 2012, 2010] },
+            { number: 10, plots: [2016, 2018, 2020, 2022] }
+        ]
+    },
+    {
+        transformerNumber: 66,
+        miniPillers: [
+            { number: 1, plots: [1997, 1996, 1995, 1994] },
+            { number: 2, plots: [1998, 2000, 2002, 2004] },
+            { number: 3, plots: [1993, 1992, 1991, 2006] },
+            { number: 4, plots: [1990, 1989, 2008, 1977] },
+            { number: 5, plots: [1987, 1986, 1985, 1984] },
+            { number: 6, plots: [2016, 2019, 2021, 2023] },
+            { number: 7, plots: [2028, 2030, 2032, 2034] },
+            { number: 8, plots: [1983, 1982, 1981, 1980] },
+            { number: 9, plots: [2036, 2038, 2039, 2037] },
+            { number: 10, plots: [1979, 1978, 1977, 1976] }
+        ]
+    },
+    {
+        transformerNumber: 67,
+        miniPillers: [
+            { number: 1, plots: [1867, 1869, 1871, 1873] },
+            { number: 2, plots: [2055, 2057, 2061, 2004] },
+            { number: 3, plots: [2035, 1875, 2052, 1877] },
+            { number: 4, plots: [2054, 2056, 2058, 2060] },
+            { number: 5, plots: [2062, 2064, 2066, 2068] },
+            { number: 6, plots: [2029, 2031, 2033, 2035] },
+            { number: 7, plots: [2040, 2042, 2044, 2046] },
+            { number: 8, plots: [2048, 2050, 2051, 2049] },
+            { number: 9, plots: [1879, 1881, 1883, 1885] },
+            { number: 10, plots: [1968, 1970, 1972, 1974] }
+        ]
+    },
+    {
+        transformerNumber: 68,
+        miniPillers: [
+            { number: 1, plots: [1905, 1903, 1901, 1900] },
+            { number: 2, plots: [1878, 1870, 1872, 1874] },
+            { number: 3, plots: [1876, 1878, 1880, 1882] },
+            { number: 4, plots: [1892, 1894, 1896, 1898] },
+            { number: 5, plots: [1904, 1902, 1899, 1897] },
+            { number: 6, plots: [1921, 1922, 1924, 1926] },
+            { number: 7, plots: [1968, 1970, 1972, 1974] },
+            { number: 8, plots: [1884, 1967, 1969, 1971] },
+            { number: 9, plots: [1890, 1888, 1886, 1887] },
+            { number: 10, plots: [1973, 1965, 1975, 1966] }
+        ]
+    },
+    {
+        transformerNumber: 69,
+        miniPillers: [
+            { number: 1, plots: [1857, 1855, 1853, 1851] },
+            { number: 2, plots: [1849, 1847, 1845, 1843] },
+            { number: 3, plots: [1841, 1839, 1837, 1835] },
+            { number: 4, plots: [1836, 1838, 1840, 1842] },
+            { number: 5, plots: [1844, 1846, 1848, 1850] },
+            { number: 6, plots: [1860, 1862, 1864, 1866] },
+            { number: 7, plots: [1907, 1909, 1911, 1852] },
+            { number: 8, plots: [1912, 1910, 1908, 1906] },
+            { number: 9, plots: [1919, 1917, 1915, 1913] },
+            { number: 10, plots: [1914, 1916, 1918, 1920] }
+        ]
+    },
+    {
+        transformerNumber: 70,
+        miniPillers: [
+            { number: 1, plots: [1950, 1958, 1946, 1944] },
+            { number: 2, plots: [1942, 1940, 1938, 1936] },
+            { number: 3, plots: [1923, 1925, 1927, 1929] },
+            { number: 4, plots: [1934, 1932, 1928, 1930] },
+            { number: 5, plots: [1895, 1893, 1891, 1889] },
+            { number: 6, plots: [1964, 1963, 1962, 1961] },
+            { number: 7, plots: [1931, 1933, 1935, 1937] },
+            { number: 8, plots: [1960, 1959, 1958, 1957] },
+            { number: 9, plots: [1939, 1941, 1943, 1945] },
+            { number: 10, plots: [1956, 1955, 1954, 1953] }
+        ]
+    },
+    {
+        transformerNumber: 71,
+        miniPillers: [
+            { number: 1, plots: [1812, 1814, 1816, 1818] },
+            { number: 2, plots: [1820, 1822, 1823, 1825] },
+            { number: 3, plots: [1827, 1829, 1831, 1833] },
+            { number: 4, plots: [1834, 1832, 1830, 1828] },
+            { number: 5, plots: [1826, 1824, 1821, 1819] },
+            { number: 6, plots: [1817, 1815, 1813, 1811] },
+            { number: 7, plots: [1951, 1949, 1947, 1945] }
+        ]
+    },
+    {
+        transformerNumber: 72,
+        miniPillers: [
+            { number: 1, plots: [1758, 1759, 1760, 1761] },
+            { number: 2, plots: [1762, 1763, 1764, 1765] },
+            { number: 3, plots: [1767, 1768, 1769, 1770] },
+            { number: 4, plots: [1771, 1772, 1773, 1774] },
+            { number: 5, plots: [1775, 1766, 1777, 1779] },
+            { number: 6, plots: [1781, 1783, 1785, 1787] },
+            { number: 7, plots: [1789, 1791, 1792, 1790] },
+            { number: 8, plots: [1788, 1786, 1784, 1782] },
+            { number: 9, plots: [1805, 1776, 1778, 1780] },
+            { number: 10, plots: [1808, 1810, 1809, 1807] }
+        ]
+    },
+    {
+        transformerNumber: 73,
+        miniPillers: [
+            { number: 1, plots: [1742, 1743, 1744, 1745] },
+            { number: 2, plots: [1765, 1764, 1763] },
+            { number: 3, plots: [1750, 1751, 1752, 1753] },
+            { number: 4, plots: [1754, 1755, 1756, 1757] },
+            { number: 5, plots: [1644, 1646, 1648, 1650] },
+            { number: 6, plots: [1651, 1649, 1647, 1645] },
+            { number: 7, plots: [1719, 1721, 1723, 1725] },
+            { number: 8, plots: [1727, 1729, 1731, 1733] },
+            { number: 9, plots: [1735, 1737, 1739, 1741] },
+            { number: 10, plots: [1718, 1720, 1722, 1724] }
+        ]
+    },
+    {
+        transformerNumber: 74,
+        miniPillers: [
+            { number: 1, plots: [1716, 1717, 1643, 1641] },
+            { number: 2, plots: [1639, 1637, 1635, 1633] },
+            { number: 3, plots: [1631, 1628, 1626, 1624] },
+            { number: 4, plots: [1587, 1623, 1625, 1627] },
+            { number: 5, plots: [1629, 1630, 1632, 1634] },
+            { number: 6, plots: [1636, 1638, 1640, 1642] },
+            { number: 7, plots: [1618, 1620, 1622, 1794] },
+            { number: 8, plots: [1796, 1621, 1619, 1617] },
+            { number: 9, plots: [1798, 1800, 1802, 1804, 1806] },
+            { number: 10, plots: [1793, 1795, 1797, 1799] }
+        ]
+    },
+    {
+        transformerNumber: 75,
+        miniPillers: [
+            { number: 1, plots: [1740, 1738, 1736, 1734] },
+            { number: 2, plots: [1732, 1730, 1728, 1726] },
+            { number: 3, plots: [1696, 1698, 1699, 1697] },
+            { number: 4, plots: [1695, 1693, 1691, 1689] },
+            { number: 5, plots: [1701, 1703, 1705, 1707] },
+            { number: 6, plots: [1709, 1711, 1713, 1715] },
+            { number: 7, plots: [1714, 1712, 1710, 1708] },
+            { number: 8, plots: [1706, 1704, 1702, 1700] },
+            { number: 9, plots: [1652, 1654, 1656, 1658] },
+            { number: 10, plots: [1653, 1655, 1657, 1659] }
+        ]
+    },
+    {
+        transformerNumber: 76,
+        miniPillers: [
+            { number: 1, plots: [1616, 1614, 1612, 1609] },
+            { number: 2, plots: [1607, 1605, 1603, 1601] },
+            { number: 3, plots: [1600, 1602, 1604, 1606] },
+            { number: 4, plots: [1608, 1610, 1611, 1613, 1615] },
+            { number: 5, plots: [1596, 1598, 1599, 1597] },
+            { number: 6, plots: [1595, 1593, 1591, 1589] },
+            { number: 7, plots: [1588, 1590, 1592, 1594] },
+            { number: 8, plots: [1566, 1568, 1569, 1567] },
+            { number: 9, plots: [1565, 1563, 1561, 1559] },
+            { number: 10, plots: [1558, 1560, 1562, 1564] }
+        ]
+    },
+    {
+        transformerNumber: 77,
+        miniPillers: [
+            { number: 1, plots: [1661, 1663, 1665, 1667] },
+            { number: 2, plots: [1669, 1578, 1670, 1668] },
+            { number: 3, plots: [1666, 1664, 1662, 1660] },
+            { number: 4, plots: [1580, 1582, 1584, 1586] },
+            { number: 5, plots: [1585, 1583, 1581, 1579] },
+            { number: 6, plots: [1577, 1575, 1573, 1571] },
+            { number: 7, plots: [1570, 1572, 1574, 1576] },
+            { number: 8, plots: [1672, 1674, 1676, 1678] },
+            { number: 9, plots: [1681, 1683, 1685, 1687] },
+            { number: 10, plots: [1671, 1673, 1675, 1677] }
+        ]
+    },
+    {
+        transformerNumber: 78,
+        miniPillers: [
+            { number: 1, plots: [1543, 1545, 1547, 1549] },
+            { number: 2, plots: [1551, 1553, 1555, 1557] },
+            { number: 3, plots: [1556, 1554, 1552, 1550] },
+            { number: 4, plots: [1193, 1191, 1189, 1187] },
+            { number: 5, plots: [1185, 1183, 1181, 1179] },
+            { number: 6, plots: [1178, 1180, 1182, 1184] },
+            { number: 7, plots: [1186, 1188, 1190, 1192] },
+            { number: 8, plots: [1103, 1101, 1099, 1097] },
+            { number: 9, plots: [1095, 1093, 1091, 1089] },
+            { number: 10, plots: [1088, 1090, 1092, 1094] }
+        ]
+    },
+    {
+        transformerNumber: 79,
+        miniPillers: [
+            { number: 1, plots: [1508, 1510, 1512, 1514] },
+            { number: 2, plots: [1516, 1518, 1520, 1522] },
+            { number: 3, plots: [1523, 1525, 1527, 1528] },
+            { number: 4, plots: [1524, 1526, 1694, 1692] },
+            { number: 5, plots: [1690, 1688, 1686, 1684] },
+            { number: 6, plots: [1532, 1682, 1680, 1679] },
+            { number: 7, plots: [1548, 1546, 1544, 1542] },
+            { number: 8, plots: [1540, 1538, 1536, 1534] },
+            { number: 9, plots: [1541, 1539, 1537, 1535] },
+            { number: 10, plots: [1533, 1531, 1529, 1530] }
+        ]
+    },
+    {
+        transformerNumber: 80,
+        miniPillers: [
+            { number: 1, plots: [1509, 1511, 1513] },
+            { number: 2, plots: [1515, 1517, 1519, 1521] },
+            { number: 3, plots: [1506, 1504, 1502, 1500] },
+            { number: 4, plots: [1496, 1494, 1492, 1490, 1498] },
+            { number: 5, plots: [1488, 1486, 1484, 1482] },
+            { number: 6, plots: [1197, 1199, 1480, 1479] },
+            { number: 7, plots: [1481, 1483, 1485, 1487] },
+            { number: 8, plots: [1489, 1491, 1493, 1495] },
+            { number: 9, plots: [1462, 1464, 1501, 1499, 1497] },
+            { number: 10, plots: [1466, 1468, 1470, 1472] }
+        ]
+    },
+    {
+        transformerNumber: 81,
+        miniPillers: [
+            { number: 1, plots: [1437, 1438, 1439, 1440] },
+            { number: 2, plots: [1441, 1442, 1443, 1444] },
+            { number: 3, plots: [1445, 1446, 1447, 1448] },
+            { number: 4, plots: [1449, 1450, 1451, 1452] },
+            { number: 5, plots: [1301, 1299, 1297, 1295] },
+            { number: 6, plots: [1306, 1304, 1303, 1302] },
+            { number: 7, plots: [1453, 1455, 1454, 1505] },
+            { number: 8, plots: [1300, 1298, 1296, 1294] },
+            { number: 9, plots: [1457, 1459, 1461, 1463] },
+            { number: 10, plots: [1503, 1456, 1458, 1460] }
+        ]
+    },
+    {
+        transformerNumber: 82,
+        miniPillers: [
+            { number: 1, plots: [1258, 1260, 1262, 1264] },
+            { number: 2, plots: [1266, 1268, 1270, 1272] },
+            { number: 3, plots: [1271, 1273, 1275, 1277] },
+            { number: 4, plots: [1263, 1265, 1267, 1269] },
+            { number: 5, plots: [1293, 1291, 1289] },
+            { number: 6, plots: [1287, 1283, 1281, 1279] },
+            { number: 7, plots: [1292, 1290, 1288, 1465, 1467] },
+            { number: 8, plots: [1286, 1284, 1282, 1280, 1278] },
+            { number: 9, plots: [1469, 1471, 1473, 1475] },
+            { number: 10, plots: [1477, 1478, 1476, 1474] }
+        ]
+    },
+    {
+        transformerNumber: 83,
+        miniPillers: [
+            { number: 1, plots: [1223, 1221, 1219, 1217] },
+            { number: 2, plots: [1215, 1213, 1211, 1209] },
+            { number: 3, plots: [1207, 1205, 1203, 1201] },
+            { number: 4, plots: [1195, 1194, 1196, 1198] },
+            { number: 5, plots: [1200, 1202, 1204, 1206] },
+            { number: 6, plots: [1208, 1210, 1212, 1214] },
+            { number: 7, plots: [1216, 1218, 1220, 1222] },
+            { number: 8, plots: [1248, 1250, 1252, 1254] },
+            { number: 9, plots: [1276, 1274, 1256, 1257] },
+            { number: 10, plots: [1249, 1251, 1253, 1255] }
+        ]
+    },
+    {
+        transformerNumber: 84,
+        miniPillers: [
+            { number: 1, plots: [1139, 1141, 1143, 1145] },
+            { number: 2, plots: [1147, 1149, 1151, 1153] },
+            { number: 3, plots: [1155, 1157, 1159, 1161] },
+            { number: 4, plots: [1163, 1165, 1167, 1169] },
+            { number: 5, plots: [1171, 1173, 1175, 1177] },
+            { number: 6, plots: [1176, 1174, 1172, 1170] },
+            { number: 7, plots: [1168, 1166, 1164, 1162] },
+            { number: 8, plots: [1160, 1158, 1156, 1154] },
+            { number: 9, plots: [1152, 1150, 1148, 1146] },
+            { number: 10, plots: [1144, 1142, 1140, 1138] }
+        ]
+    },
+    {
+        transformerNumber: 85,
+        miniPillers: [
+            { number: 1, plots: [667, 669, 1136, 1137] },
+            { number: 2, plots: [1135, 1133, 1131, 1129] },
+            { number: 3, plots: [1127, 1125, 1123, 1121] },
+            { number: 4, plots: [1119, 1117, 1115, 1113] },
+            { number: 5, plots: [1111, 1109, 1107, 1105] },
+            { number: 6, plots: [1096, 1098, 1100, 1102] },
+            { number: 7, plots: [1104, 1106, 1108, 1110] },
+            { number: 8, plots: [1112, 1114, 1116, 1118] },
+            { number: 9, plots: [1120, 1122, 1124, 1126] },
+            { number: 10, plots: [1128, 1130, 1132, 1134] }
+        ]
+    },
+    {
+        transformerNumber: 86,
+        miniPillers: [
+            { number: 1, plots: [966, 968, 970, 973] },
+            { number: 2, plots: [975, 977, 979, 981] },
+            { number: 3, plots: [983, 982, 939, 980] },
+            { number: 4, plots: [978, 976, 974, 972] },
+            { number: 5, plots: [984, 986, 988, 990] },
+            { number: 6, plots: [992, 994, 996, 998] },
+            { number: 7, plots: [1000, 1002, 1004, 1006] },
+            { number: 8, plots: [1008, 1010, 1011, 1009] },
+            { number: 9, plots: [985, 987, 989, 991] },
+            { number: 10, plots: [993, 995, 997, 999] }
+        ]
+    },
+    {
+        transformerNumber: 87,
+        miniPillers: [
+            { number: 1, plots: [1038, 1036, 1034, 1032] },
+            { number: 2, plots: [1030, 1028, 1026, 1024] },
+            { number: 3, plots: [1022, 1020, 1018, 1016] },
+            { number: 4, plots: [1014, 1012, 1013, 1015] },
+            { number: 5, plots: [1017, 1019, 1021, 1023] },
+            { number: 6, plots: [1025, 1027, 1029, 1031] },
+            { number: 7, plots: [1033, 1035, 1037, 1039] },
+            { number: 8, plots: [1041, 1043, 1045, 1047] },
+            { number: 9, plots: [1049, 1051, 1053, 1055] },
+            { number: 10, plots: [1001, 1003, 1005, 1007] }
+        ]
+    },
+    {
+        transformerNumber: 88,
+        miniPillers: [
+            { number: 1, plots: [1086, 1084, 1082, 1080] },
+            { number: 2, plots: [1078, 1076, 1074, 1072] },
+            { number: 3, plots: [1070, 1068, 1066, 1064] },
+            { number: 4, plots: [1062, 1060, 1058, 1056] },
+            { number: 5, plots: [1054, 1052, 1050, 1048] },
+            { number: 6, plots: [1046, 1044, 1042, 1040] },
+            { number: 7, plots: [1057, 1059, 1061, 1063] },
+            { number: 8, plots: [1065, 1067, 1069, 1071] },
+            { number: 9, plots: [1073, 1075, 1077, 1079] },
+            { number: 10, plots: [1081, 1083, 1085, 1087] }
+        ]
+    },
+    {
+        transformerNumber: 89,
+        miniPillers: [
+            { number: 1, plots: [963, 961, 959, 957] },
+            { number: 2, plots: [955, 954, 952, 950] },
+            { number: 3, plots: [948, 946, 944, 942] },
+            { number: 4, plots: [940, 938, 936, 934] },
+            { number: 5, plots: [932, 930, 928, 929] },
+            { number: 6, plots: [931, 933, 935, 937] },
+            { number: 7, plots: [941, 943, 945, 947] },
+            { number: 8, plots: [949, 951, 953, 956] },
+            { number: 9, plots: [958, 960, 962, 964] },
+            { number: 10, plots: [965, 966, 969, 971] }
+        ]
+    },
+    {
+        transformerNumber: 90,
+        miniPillers: [
+            { number: 1, plots: [887, 888, 890, 892] },
+            { number: 2, plots: [894, 896, 898, 900] },
+            { number: 3, plots: [902, 904, 906, 908] },
+            { number: 4, plots: [910, 912, 914, 916] },
+            { number: 5, plots: [918, 920, 922, 924] },
+            { number: 6, plots: [926, 927, 925, 923] },
+            { number: 7, plots: [921, 919, 917, 915] },
+            { number: 8, plots: [913, 911, 909, 907] },
+            { number: 9, plots: [905, 903, 901, 899] },
+            { number: 10, plots: [897, 895, 893, 891] }
+        ]
+    },
+    {
+        transformerNumber: 91,
+        miniPillers: [
+            { number: 1, plots: [1305, 1307, 1309, 1311] },
+            { number: 2, plots: [1313, 1315, 1317, 1319] },
+            { number: 3, plots: [1324, 1325, 1321, 1323] },
+            { number: 4, plots: [1308, 1310, 1312, 1314] },
+            { number: 5, plots: [1316, 1318, 1320, 1322] },
+            { number: 6, plots: [1433, 1434, 1435, 1436] },
+            { number: 7, plots: [1366, 1364, 1362, 1360] },
+            { number: 8, plots: [1358, 1356, 1354, 1352] },
+            { number: 9, plots: [1333, 1331, 1329, 1327] },
+            { number: 10, plots: [1332, 1330, 1328, 1326] }
+        ]
+    },
+    {
+        transformerNumber: 92,
+        miniPillers: [
+            { number: 1, plots: [1248, 1245, 1243, 1241] },
+            { number: 2, plots: [1239, 1237, 1235, 1233] },
+            { number: 3, plots: [1231, 1229, 1227, 1225] },
+            { number: 4, plots: [1224, 1226, 1228, 1230] },
+            { number: 5, plots: [1232, 1234, 1236, 1238] },
+            { number: 6, plots: [1240, 1242, 1244, 1246] },
+            { number: 7, plots: [1347, 1345, 1343, 1342] },
+            { number: 8, plots: [1350, 1348, 1346, 1344] },
+            { number: 9, plots: [1335, 1337, 1339, 1341] },
+            { number: 10, plots: [1340, 1338, 1336, 1334] }
+        ]
+    },
+    {
+        transformerNumber: 93,
+        miniPillers: [
+            { number: 1, plots: [686, 688, 690, 692] },
+            { number: 2, plots: [694, 696, 698, 700] },
+            { number: 3, plots: [702, 701, 699, 697] },
+            { number: 4, plots: [695, 693, 691, 689] },
+            { number: 5, plots: [687, 685, 684, 682] },
+            { number: 6, plots: [680, 678, 676, 674] },
+            { number: 7, plots: [672, 670, 668, 666] },
+            { number: 8, plots: [664, 662, 661, 663] },
+            { number: 9, plots: [669, 671, 673, 675] },
+            { number: 10, plots: [677, 679, 681, 683] }
+        ]
+    },
+    {
+        transformerNumber: 94,
+        miniPillers: [
+            { number: 1, plots: [750, 748, 746, 744] },
+            { number: 2, plots: [742, 740, 738, 736] },
+            { number: 3, plots: [745, 743, 741, 739] },
+            { number: 4, plots: [737, 735, 733, 734] },
+            { number: 5, plots: [867, 869, 871, 873] },
+            { number: 6, plots: [875, 877, 879, 881] },
+            { number: 7, plots: [883, 885, 887, 889] },
+            { number: 8, plots: [884, 882, 880] },
+            { number: 9, plots: [876, 878, 874, 872, 870] },
+            { number: 10, plots: [868, 866, 863, 861] }
+        ]
+    },
+    {
+        transformerNumber: 95,
+        miniPillers: [
+            { number: 1, plots: [638, 640, 642, 644] },
+            { number: 2, plots: [646, 648, 650, 652] },
+            { number: 3, plots: [654, 656, 658, 660] },
+            { number: 4, plots: [659, 657, 655, 653] },
+            { number: 5, plots: [651, 649, 647, 645] },
+            { number: 6, plots: [643, 641, 639, 637] },
+            { number: 7, plots: [722, 721, 719, 717] },
+            { number: 8, plots: [715, 713, 712, 710] },
+            { number: 9, plots: [708, 706, 704, 703] },
+            { number: 10, plots: [705, 707, 709, 711] }
+        ]
+    },
+    {
+        transformerNumber: 96,
+        miniPillers: [
+            { number: 1, plots: [1429, 1430, 1431, 1432] },
+            { number: 2, plots: [1370, 1372, 1374, 1376] },
+            { number: 3, plots: [1378, 1380, 1382, 1384] },
+            { number: 4, plots: [1386, 1388, 1351, 1349] },
+            { number: 5, plots: [1390, 1392, 1393, 1391] },
+            { number: 6, plots: [1389, 1387, 1385, 1383] },
+            { number: 7, plots: [1381, 1379, 1377, 1375] },
+            { number: 8, plots: [1373, 1371, 1369, 1368] },
+            { number: 9, plots: [1353, 1355, 1357, 1359] },
+            { number: 10, plots: [1361, 1363, 1365, 1367] }
+        ]
+    },
+    {
+        transformerNumber: 97,
+        miniPillers: [
+            { number: 1, plots: [1428, 1426, 1424, 1422] },
+            { number: 2, plots: [1427, 1425, 1423, 1421] },
+            { number: 3, plots: [1419, 1417, 1415, 1413] },
+            { number: 4, plots: [608, 610, 1411, 612] },
+            { number: 5, plots: [1409, 1407, 1405, 1403] },
+            { number: 6, plots: [1401, 1399, 619, 620] },
+            { number: 7, plots: [1397, 1395, 1394, 1396] },
+            { number: 8, plots: [1398, 1400, 1402, 1404] },
+            { number: 9, plots: [1406, 1408, 1410, 1412] },
+            { number: 10, plots: [1420, 1418, 1416, 1412] }
+        ]
+    },
+    {
+        transformerNumber: 98,
+        miniPillers: [
+            { number: 1, plots: [592, 594, 596, 598] },
+            { number: 2, plots: [600, 602, 604, 606] },
+            { number: 3, plots: [614, 616, 618, 617] },
+            { number: 4, plots: [611, 609, 607, 605] },
+            { number: 5, plots: [603, 601, 599, 597] },
+            { number: 6, plots: [595, 593, 591, 590] },
+            { number: 7, plots: [613, 615, 619, 620] },
+            { number: 8, plots: [523, 521, 522, 524] },
+            { number: 9, plots: [525, 527, 529, 531] },
+            { number: 10, plots: [533, 535, 537, 539] }
+        ]
+    },
+    {
+        transformerNumber: 99,
+        miniPillers: [
+            { number: 1, plots: [589, 588, 587, 586] },
+            { number: 2, plots: [544, 542, 541, 543] },
+            { number: 3, plots: [545, 547, 549, 551] },
+            { number: 4, plots: [553, 555, 557, 559] },
+            { number: 5, plots: [560, 558, 556, 554] },
+            { number: 6, plots: [552, 550, 548, 546] },
+            { number: 7, plots: [540, 538, 536, 534] },
+            { number: 8, plots: [532, 530, 528, 526] },
+            { number: 9, plots: [518, 516, 514, 512] },
+            { number: 10, plots: [510, 508, 506, 504] }
+        ]
+    },
+    {
+        transformerNumber: 100,
+        miniPillers: [
+            { number: 1, plots: [485, 487, 489, 491] },
+            { number: 2, plots: [493, 495, 497, 499] },
+            { number: 3, plots: [636, 634, 632, 630] },
+            { number: 4, plots: [628, 626, 624, 622] },
+            { number: 5, plots: [621, 623, 625, 627] },
+            { number: 6, plots: [629, 631, 633, 635] },
+            { number: 7, plots: [501, 502, 500, 498] },
+            { number: 8, plots: [496, 494, 492, 490] },
+            { number: 9, plots: [503, 505, 507, 509] },
+            { number: 10, plots: [511, 513, 515, 517] }
+        ]
+    },
+    {
+        transformerNumber: 101,
+        miniPillers: [
+            { number: 1, plots: [774, 772, 770, 768] },
+            { number: 2, plots: [766, 764, 762, 760] },
+            { number: 3, plots: [758, 756, 754, 752] },
+            { number: 4, plots: [773, 771, 769, 767] },
+            { number: 5, plots: [765, 763, 761, 759] },
+            { number: 6, plots: [757, 755, 753, 751] },
+            { number: 7, plots: [724, 726, 728, 730] },
+            { number: 8, plots: [732, 731, 749, 747] },
+            { number: 9, plots: [723, 725, 727, 729] },
+            { number: 10, plots: [714, 716, 718, 720] }
+        ]
+    },
+    {
+        transformerNumber: 102,
+        miniPillers: [
+            { number: 1, plots: [585, 584, 583, 582] },
+            { number: 2, plots: [575, 573, 571, 569] },
+            { number: 3, plots: [567, 565, 563, 561] },
+            { number: 4, plots: [562, 564, 566, 568] },
+            { number: 5, plots: [570, 572, 574, 576] },
+            { number: 6, plots: [578, 580, 579, 577] },
+            { number: 7, plots: [360, 581, 362, 364] },
+            { number: 8, plots: [366, 368, 370, 372] },
+            { number: 9, plots: [374, 372, 378, 380] },
+            { number: 10, plots: [382, 384, 386, 388] }
+        ]
+    },
+    {
+        transformerNumber: 103,
+        miniPillers: [
+            { number: 1, plots: [819, 821, 823, 824] },
+            { number: 2, plots: [820, 818, 816, 814] },
+            { number: 3, plots: [865, 864, 862, 860] },
+            { number: 4, plots: [858, 856, 854, 853] },
+            { number: 5, plots: [851, 849, 824, 847] },
+            { number: 6, plots: [845, 843, 842, 841] },
+            { number: 7, plots: [839, 837, 835, 833] },
+            { number: 8, plots: [834, 836, 838, 840] },
+            { number: 9, plots: [844, 846, 848, 850] },
+            { number: 10, plots: [852, 855, 857, 859] }
+        ]
+    },
+    {
+        transformerNumber: 104,
+        miniPillers: [
+            { number: 1, plots: [793, 795, 797, 799] },
+            { number: 2, plots: [801, 803, 805, 807] },
+            { number: 3, plots: [809, 811, 812, 810] },
+            { number: 4, plots: [776, 778, 780, 782] },
+            { number: 5, plots: [784, 786, 788, 790] },
+            { number: 6, plots: [792, 794, 796, 798] },
+            { number: 7, plots: [800, 802, 804, 806] },
+            { number: 8, plots: [817, 815, 813, 808] },
+            { number: 9, plots: [831, 829, 827, 825] },
+            { number: 10, plots: [826, 828, 830, 832] }
+        ]
+    },
+    {
+        transformerNumber: 105,
+        miniPillers: [
+            { number: 1, plots: [359, 358, 361, 363] },
+            { number: 2, plots: [365, 367, 369, 371] },
+            { number: 3, plots: [373, 375, 377, 379] },
+            { number: 4, plots: [381, 383, 385, 387] },
+            { number: 5, plots: [401, 403, 405, 406] },
+            { number: 6, plots: [409, 407, 408, 410] },
+            { number: 7, plots: [412, 414, 416, 418] },
+            { number: 8, plots: [420, 422, 424, 426] },
+            { number: 9, plots: [425, 423, 421, 419] },
+            { number: 10, plots: [404, 402, 400, 398] }
+        ]
+    },
+    {
+        transformerNumber: 106,
+        miniPillers: [
+            { number: 1, plots: [396, 394, 392, 390] },
+            { number: 2, plots: [389, 391, 448, 447] },
+            { number: 3, plots: [393, 395, 397, 399] },
+            { number: 4, plots: [449, 451, 453, 455] },
+            { number: 5, plots: [457, 459, 461, 463] },
+            { number: 6, plots: [464, 462, 460, 458] },
+            { number: 7, plots: [456, 454, 452, 450] },
+            { number: 8, plots: [443, 445, 446, 444] },
+            { number: 9, plots: [442, 440, 438, 436] },
+            { number: 10, plots: [441, 439, 437, 435] }
+        ]
+    },
+    {
+        transformerNumber: 107,
+        miniPillers: [
+            { number: 1, plots: [267, 265, 263, 261] },
+            { number: 2, plots: [466, 468, 470, 472] },
+            { number: 3, plots: [474, 476, 478, 480] },
+            { number: 4, plots: [482, 484, 486, 488] },
+            { number: 5, plots: [483, 481, 479, 477] },
+            { number: 6, plots: [475, 473, 471, 479] },
+            { number: 7, plots: [467, 149, 151, 465] },
+            { number: 8, plots: [152, 157, 155, 153] },
+            { number: 9, plots: [147, 145, 144, 146] },
+            { number: 10, plots: [148, 150, 152, 154] }
+        ]
+    },
+    {
+        transformerNumber: 108,
+        miniPillers: [
+            { number: 1, plots: [113, 115, 117, 119] },
+            { number: 2, plots: [121, 123, 125, 127] },
+            { number: 3, plots: [129, 131, 133, 135] },
+            { number: 4, plots: [137, 139, 141, 143] },
+            { number: 5, plots: [142, 775, 140, 138] },
+            { number: 6, plots: [136, 134, 132, 130] },
+            { number: 7, plots: [128, 126, 124, 122] },
+            { number: 8, plots: [120, 118, 116, 114] },
+            { number: 9, plots: [777, 779, 781, 783] },
+            { number: 10, plots: [785, 787, 789, 791] }
+        ]
+    },
+    {
+        transformerNumber: 109,
+        miniPillers: [
+            { number: 1, plots: [94, 96, 98, 100] },
+            { number: 2, plots: [102, 104, 39, 38] },
+            { number: 3, plots: [91, 93, 95, 97] },
+            { number: 4, plots: [99, 101, 103, 105] },
+            { number: 5, plots: [111, 109, 107, 33] },
+            { number: 6, plots: [112, 110, 108, 106] },
+            { number: 7, plots: [35, 37, 36, 34] },
+            { number: 8, plots: [32, 30, 28, 26] },
+            { number: 9, plots: [31, 29, 27, 25] },
+            { number: 10, plots: [23, 21, 19, 17] }
+        ]
+    },
+    {
+        transformerNumber: 110,
+        miniPillers: [
+            { number: 1, plots: [54, 56, 58, 60] },
+            { number: 2, plots: [62, 64, 65, 63] },
+            { number: 3, plots: [52, 53, 55, 57] },
+            { number: 4, plots: [67, 69, 59, 61] },
+            { number: 5, plots: [71, 73, 75, 77] },
+            { number: 6, plots: [79, 78, 76, 74] },
+            { number: 7, plots: [72, 70, 68, 66] },
+            { number: 8, plots: [81, 80, 82, 84] },
+            { number: 9, plots: [86, 88, 90, 92] },
+            { number: 10, plots: [89, 87, 85, 83] }
+        ]
+    },
+    {
+        transformerNumber: 111,
+        miniPillers: [
+            { number: 1, plots: [24, 22, 20, 18] },
+            { number: 2, plots: [16, 14, 12, 10] },
+            { number: 3, plots: [8, 6, 4, 2] },
+            { number: 4, plots: [1, 3, 5, 7] },
+            { number: 5, plots: [9, 11, 13, 15] },
+            { number: 6, plots: [40, 42, 44, 46] },
+            { number: 7, plots: [48, 50, 51, 49] },
+            { number: 8, plots: [47, 45, 43, 41] },
+            { number: 9, plots: [194, 196, 198, 200] },
+            { number: 10, plots: [195, 197, 199, 201] }
+        ]
+    },
+    {
+        transformerNumber: 112,
+        miniPillers: [
+            { number: 1, plots: [357, 356, 355, 354] },
+            { number: 2, plots: [353, 352, 351, 350] },
+            { number: 3, plots: [349, 348, 347, 346] },
+            { number: 4, plots: [345, 344, 343, 342] },
+            { number: 5, plots: [341, 340, 339, 338] },
+            { number: 6, plots: [294, 296, 290, 288] },
+            { number: 7, plots: [286, 287, 289, 291] },
+            { number: 8, plots: [433, 431, 429, 427] },
+            { number: 9, plots: [434, 432, 430, 438] },
+            { number: 10, plots: [426, 424, 422, 420] }
+        ]
+    },
+    {
+        transformerNumber: 113,
+        miniPillers: [
+            { number: 1, plots: [269, 271, 273, 275] },
+            { number: 2, plots: [277, 279, 281, 283] },
+            { number: 3, plots: [285, 283, 282, 280] },
+            { number: 4, plots: [278, 276, 274, 272] },
+            { number: 5, plots: [266, 264, 262, 260] },
+            { number: 6, plots: [243, 245, 268, 270] },
+            { number: 7, plots: [247, 249, 251, 253] },
+            { number: 8, plots: [255, 257, 259, 258] },
+            { number: 9, plots: [256, 254, 252, 250] },
+            { number: 10, plots: [242, 244, 246, 248] }
+        ]
+    },
+    {
+        transformerNumber: 114,
+        miniPillers: [
+            { number: 1, plots: [320, 318, 316, 314] },
+            { number: 2, plots: [312, 310, 308, 306] },
+            { number: 3, plots: [304, 305, 301, 303] },
+            { number: 4, plots: [307, 309, 311, 313] },
+            { number: 5, plots: [315, 317, 319, 321] },
+            { number: 6, plots: [293, 295, 297, 299] },
+            { number: 7, plots: [302, 300, 298, 296] },
+            { number: 8, plots: [336, 337, 335, 334] },
+            { number: 9, plots: [333, 332, 331, 330] },
+            { number: 10, plots: [329, 328, 327, 326] }
+        ]
+    },
+    {
+        transformerNumber: 115,
+        miniPillers: [
+            { number: 1, plots: [227, 229, 231, 233] },
+            { number: 2, plots: [235, 237, 239, 241] },
+            { number: 3, plots: [240, 238, 236, 234] },
+            { number: 4, plots: [232, 230, 238, 220] },
+            { number: 5, plots: [222, 224, 226, 225] },
+            { number: 6, plots: [223, 221, 219, 218] },
+            { number: 7, plots: [169, 167, 165, 163] },
+            { number: 8, plots: [164, 166, 164, 162] },
+            { number: 9, plots: [160, 158, 159, 161] },
+            { number: 10, plots: [325, 324, 323, 322] }
+        ]
+    },
+    {
+        transformerNumber: 116,
+        miniPillers: [
+            { number: 1, plots: [217, 216, 215, 214] },
+            { number: 2, plots: [213, 212, 211, 210] },
+            { number: 3, plots: [209, 208, 207, 206] },
+            { number: 4, plots: [205, 204, 203, 202] },
+            { number: 5, plots: [171, 173, 175, 177] },
+            { number: 6, plots: [179, 181, 183, 185] },
+            { number: 7, plots: [187, 189, 191, 193] },
+            { number: 8, plots: [170, 172, 174, 176] },
+            { number: 9, plots: [178, 180, 182, 184] },
+            { number: 10, plots: [187, 188, 190, 192] }
+        ]
+    },
+    {
+        transformerNumber: 117,
+        miniPillers: [
+            { number: 1, plots: [3262, 3264, 3266, 3268] },
+            { number: 2, plots: [3276, 3278, 3280, 3282] },
+            { number: 3, plots: [3270, 3272, 3274, 3276] },
+            { number: 4, plots: [3261, 3263, 3265, 3260] },
+            { number: 5, plots: [3259, 3258, 3257, 3256] },
+            { number: 6, plots: [3288, 3287, 3286, 3285] },
+            { number: 7, plots: [3323, 3321, 3320, 3322] },
+            { number: 8, plots: [3324, 3326, 3328, 3330] },
+            { number: 9, plots: [3281, 3279, 3277, 3275] },
+            { number: 10, plots: [3273, 3271, 3279, 3267] }
+        ]
+    },
+    {
+        transformerNumber: 118,
+        miniPillers: [
+            { number: 1, plots: [2481, 2483, 2485, 2487] },
+            { number: 2, plots: [2489, 2491, 2493, 2495] },
+            { number: 3, plots: [2497, 2499, 2501, 2503] },
+            { number: 4, plots: [2488, 2490, 2492, 2494] },
+            { number: 5, plots: [2480, 2482, 2484, 2486] }
+        ]
+    }
+];
+
+
+
+
+
         // خوارزمية Point in Polygon
         function isPointInPolygon(point, polygon) {
             const x = point[1]; // longitude
@@ -476,9 +2281,26 @@ coordinates: [
             return inside;
         }
 
-        function findContractor() {
+        // البحث عن المحول ولوحة التوزيع الفرعية حسب رقم القطعة
+        function findTransformerAndPiller(plotNumber) {
+            for (let transformer of transformersData) {
+                for (let piller of transformer.miniPillers) {
+                    if (piller.plots.includes(plotNumber)) {
+                        return {
+                            transformerNumber: transformer.transformerNumber,
+                            pillerNumber: piller.number,
+                            allPlots: piller.plots
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function findContractorAndPlot() {
             const latitude = parseFloat(document.getElementById('latitude').value);
             const longitude = parseFloat(document.getElementById('longitude').value);
+            const plotNumber = parseInt(document.getElementById('plotNumber').value);
             const resultDiv = document.getElementById('result');
 
             // التحقق من صحة الإدخال
@@ -487,19 +2309,27 @@ coordinates: [
                 return;
             }
 
+            if (isNaN(plotNumber)) {
+                showResult('⚠️ يرجى إدخال رقم قطعة صحيح', 'error');
+                return;
+            }
+
             const point = [latitude, longitude];
 
-            // البحث عن المقاول المناسب
+            // البحث عن المقاول المناسب حسب الإحداثيات
             const foundContractor = contractors.find(contractor => 
                 isPointInPolygon(point, contractor.coordinates)
             );
 
-            if (foundContractor) {
+            // البحث عن المحول ولوحة التوزيع الفرعية حسب رقم القطعة
+            const transformerInfo = findTransformerAndPiller(plotNumber);
+
+            if (foundContractor && transformerInfo) {
                 const message = `
                     <div class="success-header">
                         <div class="success-icon">✅</div>
-                        <div class="success-title">تم تحديد المقاول بنجاح</div>
-                        <div class="success-subtitle">Contractor Successfully Identified</div>
+                        <div class="success-title">تم تحديد جميع البيانات بنجاح</div>
+                        <div class="success-subtitle">All Data Successfully Identified</div>
                     </div>
                     <div class="contractor-info">
                         <div class="contractor-card">
@@ -508,24 +2338,101 @@ coordinates: [
                             <div class="coordinates-display">
                                 📍 الإحداثيات: ${latitude}°, ${longitude}°
                             </div>
+                            <div class="transformer-info">
+                                <div class="info-grid">
+                                    <div class="info-card">
+                                        <div class="info-title">⚡ رقم المحول</div>
+                                        <div class="info-value">${transformerInfo.transformerNumber}</div>
+                                    </div>
+                                    <div class="info-card">
+                                        <div class="info-title">🔌 لوحة التوزيع الفرعية</div>
+                                        <div class="info-value">${transformerInfo.pillerNumber}</div>
+                                    </div>
+                                    <div class="info-card">
+                                        <div class="info-title">🏠 رقم القطعة</div>
+                                        <div class="info-value">${plotNumber}</div>
+                                    </div>
+                                </div>
+                                <div class="coordinates-display" style="margin-top: 15px;">
+                                    📋 جميع القطع في نفس لوحة التوزيع: ${transformerInfo.allPlots.join(', ')}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
                 showResult(message, 'success');
-            } else {
+            } else if (foundContractor && !transformerInfo) {
+                const message = `
+                    <div class="success-header">
+                        <div class="success-icon">⚠️</div>
+                        <div class="success-title">تم تحديد المقاول - لم يتم العثور على القطعة</div>
+                        <div class="success-subtitle">Contractor Found - Plot Not Found</div>
+                    </div>
+                    <div class="contractor-info">
+                        <div class="contractor-card">
+                            <div class="contractor-name">${foundContractor.name}</div>
+                            <div class="zone-badge">${foundContractor.zone}</div>
+                            <div class="coordinates-display">
+                                📍 الإحداثيات: ${latitude}°, ${longitude}°
+                            </div>
+                            <div class="error-message">
+                                <p>❌ رقم القطعة ${plotNumber} غير موجود في قاعدة البيانات</p>
+                                <p style="margin-top: 10px;">القطع المتاحة حالياً: 4366-4425</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                showResult(message, 'success');
+            } else if (!foundContractor && transformerInfo) {
                 const message = `
                     <div class="error-section">
-                        <div class="error-icon">❌</div>
-                        <div class="error-title">لم يتم العثور على مقاول</div>
+                        <div class="error-icon">⚠️</div>
+                        <div class="error-title">تم العثور على القطعة - الإحداثيات خارج النطاق</div>
                         <div class="error-message">
                             <div class="coordinates-input">
                                 📍 الإحداثيات المدخلة: ${latitude}°, ${longitude}°
+                            </div>
+                                                       <div class="transformer-info">
+                                <div class="info-grid">
+                                    <div class="info-card">
+                                        <div class="info-title">⚡ رقم المحول</div>
+                                        <div class="info-value">${transformerInfo.transformerNumber}</div>
+                                    </div>
+                                    <div class="info-card">
+                                        <div class="info-title">🔌 لوحة التوزيع الفرعية</div>
+                                        <div class="info-value">${transformerInfo.pillerNumber}</div>
+                                    </div>
+                                    <div class="info-card">
+                                        <div class="info-title">🏠 رقم القطعة</div>
+                                        <div class="info-value">${plotNumber}</div>
+                                    </div>
+                                </div>
                             </div>
                             <p style="margin: 15px 0;">هذه الإحداثيات خارج نطاق التغطية الحالي</p>
                             <p style="font-weight: bold; margin-bottom: 15px;">المناطق المتاحة:</p>
                             <div class="zones-grid">
                                 ${contractors.map(c => `<div class="zone-item">${c.zone}<br><strong>${c.name}</strong></div>`).join('')}
                             </div>
+                        </div>
+                    </div>
+                `;
+                showResult(message, 'error');
+            } else {
+                const message = `
+                    <div class="error-section">
+                        <div class="error-icon">❌</div>
+                        <div class="error-title">لم يتم العثور على البيانات</div>
+                        <div class="error-message">
+                            <div class="coordinates-input">
+                                📍 الإحداثيات المدخلة: ${latitude}°, ${longitude}°<br>
+                                🏠 رقم القطعة المدخل: ${plotNumber}
+                            </div>
+                            <p style="margin: 15px 0;">الإحداثيات خارج نطاق التغطية ورقم القطعة غير موجود</p>
+                            <p style="font-weight: bold; margin-bottom: 15px;">المناطق المتاحة:</p>
+                            <div class="zones-grid">
+                                ${contractors.map(c => `<div class="zone-item">${c.zone}<br><strong>${c.name}</strong></div>`).join('')}
+                            </div>
+                            <p style="margin-top: 15px;">القطع المتاحة حالياً: 4366-4425</p>
                         </div>
                     </div>
                 `;
@@ -540,26 +2447,18 @@ coordinates: [
             resultDiv.style.display = 'block';
             
             // التمرير إلى النتيجة
-            setTimeout(() => {
-                resultDiv.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // إضافة مستمع للضغط على Enter
-        document.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                findContractor();
-            }
-        });
-
-        // تأثيرات تفاعلية للمدخلات
-        document.querySelectorAll('input[type="number"]').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'translateY(-2px)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'translateY(0)';
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        findContractorAndPlot();
+                    }
+                });
             });
         });
     </script>
